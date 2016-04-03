@@ -23,6 +23,7 @@ public class VehicleFollowing : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         monSpeed = speed * Time.deltaTime;
 
         targetPoint = path.Getpoint(monPathIndex);
