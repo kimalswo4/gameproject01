@@ -30,7 +30,8 @@ public class EnemySpawn : MonoBehaviour {
             {
                 if(waveFormation[i]==0)
                 {
-                    Instantiate(NormalPrefab, transform.position, Quaternion.identity);
+                    
+                    Instantiate(NormalPrefab, transform.position, Quaternion.identity);                  
                     spawnTime = Time.time;
                     spawnTimeLeft = 0;
                     i++;

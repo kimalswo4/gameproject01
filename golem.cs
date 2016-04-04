@@ -42,10 +42,10 @@ public class golem : MonoBehaviour {
                         {
 
                             
-                               
+                             
                             GameObject missile = Instantiate(Missile, MissilePoint.transform.position, MissilePoint.transform.rotation)as GameObject;
                             missile.GetComponent<Missile>().SetTarget(hit[num].collider.transform);
-                                                        
+                            missile.GetComponent<Missile>().SetTower(MissilePoint.transform);                       
                             
                                 
                         }

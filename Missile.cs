@@ -4,7 +4,9 @@ using System.Collections;
 public class Missile : MonoBehaviour {
     private golem tower;
     private Transform Target;
+    private Transform TowerPosition;
     
+    public float speed;
 
     //public GameObject golemObject;
 	// Use this for initialization
@@ -14,8 +16,10 @@ public class Missile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-        transform.position = Vector3.Lerp(transform.position, Target.position, Time.deltaTime);
+        if (Target == null || TowerPosition == null) { return; }
+        Vector3 dir = Target.position - TowerPosition.position;
+        dir.Normalize();
+        this.transform.position += speed * dir * Time.deltaTime;
 	}
 
     void OnTriggerEnter(Collider coll)
@@ -31,6 +35,10 @@ public class Missile : MonoBehaviour {
     public void SetTarget(Transform get)
     {
         Target = get; 
+    }
 
+    public void SetTower(Transform towerget)
+    {
+        TowerPosition = towerget;
     }
 }

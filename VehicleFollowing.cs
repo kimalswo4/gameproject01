@@ -16,14 +16,16 @@ public class VehicleFollowing : MonoBehaviour {
 	void Start () {
         pathLength = path.Length;
         monPathIndex = 0;
-
+        
         velocity = transform.forward;
 	}
 	
 	// Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+
+        //transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+
         monSpeed = speed * Time.deltaTime;
 
         targetPoint = path.Getpoint(monPathIndex);
