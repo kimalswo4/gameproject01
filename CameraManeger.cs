@@ -5,13 +5,13 @@ public class CameraManeger : MonoBehaviour {
     private Vector3 ResetCamera;
     private Vector3 Origin;
     private Vector3 Diference;
-    private bool tower1 = false;
+    public bool tower1 = false;
     private bool tower2 = false;
     private bool tower3 = false;
     public GameObject Tower1;
     public GameObject Tower2;
     public GameObject Tower3;
-    private bool Groundcheck;
+    
 
 
     private bool Drag = false;
@@ -19,7 +19,7 @@ public class CameraManeger : MonoBehaviour {
     void start()
     {
         ResetCamera = Camera.main.transform.position;
-        Groundcheck = GetComponent<GroundScript>().build;
+        
     }
 
 
@@ -71,7 +71,7 @@ public class CameraManeger : MonoBehaviour {
                if (hit.collider.tag == "Tower1")
                {
                    tower1 = true;
-                   Debug.Log("check");
+                  
                }
 
                if(hit.collider.tag == "Tower2")
@@ -83,11 +83,11 @@ public class CameraManeger : MonoBehaviour {
                {
                    tower3 = true;
                }
-               if(hit.collider.tag == "Ground" && tower1 == true && Groundcheck == false)
+               if(hit.collider.tag == "Ground" && tower1 == true && hit.collider.gameObject.GetComponent<GroundScript>().build == false)
                {
                    
                    Instantiate(Tower1, hit.transform.position, Quaternion.identity);
-                   Groundcheck = true;
+                   hit.collider.gameObject.GetComponent<GroundScript>().build = true;
                    tower1 = false;
                }
                

@@ -17,12 +17,20 @@ public class Pioneer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Invoke("CheckPosition", Wait);
+        
         if (hp == 0)
         {
             Destroy(gameObject);
         }
 	}
-    
+    void OnTriggerEnter(Collider coll)
+    {
+        if(coll.tag == "missile")
+        {
+            hp -= 1;
+        }
+    }
+
     void CheckPosition()
     {
         if(rend.enabled ==false)

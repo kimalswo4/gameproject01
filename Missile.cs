@@ -11,7 +11,7 @@ public class Missile : MonoBehaviour {
     //public GameObject golemObject;
 	// Use this for initialization
 	void Start () {
-        tower = GameObject.Find("TowerTest").GetComponent<golem>();
+        tower = GameObject.Find("TowerTest(Clone)").GetComponent<golem>();
 	}
 	
 	// Update is called once per frame
@@ -28,7 +28,7 @@ public class Missile : MonoBehaviour {
         {
             
             Destroy(gameObject);
-            Destroy(coll.gameObject);
+            
         }
     }
 

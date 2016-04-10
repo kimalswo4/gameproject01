@@ -31,7 +31,7 @@ public class EnemySpawn : MonoBehaviour {
             {
                 if(waveFormation[i]==0)
                 {
-                    Debug.Log(transform.position);
+                    
                     Instantiate(Pioneer, transform.position, Quaternion.identity);                  
                     spawnTime = Time.time;
                     spawnTimeLeft = 0;
@@ -39,7 +39,7 @@ public class EnemySpawn : MonoBehaviour {
                 }
                 else if(waveFormation[i]==1)
                 {
-                    Debug.Log(transform.position);
+                    
                     Instantiate(Tanker, transform.position, Quaternion.identity);
                     spawnTime = Time.time;
                     spawnTimeLeft = 0;
