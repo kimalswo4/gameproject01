@@ -24,12 +24,12 @@ public class VehicleFollowing : MonoBehaviour {
     void Update()
     {
 
-        //transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1.401298e-45f);
 
         monSpeed = speed * Time.deltaTime;
 
         targetPoint = path.Getpoint(monPathIndex);
-
+         
         //목적지의 반지름내에 들어왓을시 경로다음지점이동
         if (Vector3.Distance(transform.position, targetPoint) < path.Radius)
         {
@@ -51,7 +51,7 @@ public class VehicleFollowing : MonoBehaviour {
 
         //속도에 따라 이동
         transform.position += velocity;
-
+        
         
          
     }
