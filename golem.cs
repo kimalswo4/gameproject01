@@ -30,23 +30,29 @@ public class golem : MonoBehaviour {
 
         RaycastHit[] hit = Physics.BoxCastAll(_transform.position, _Attackrange, Vector3.forward, Quaternion.identity, Mathf.Infinity, (-1) - (1 << LayerMask.NameToLayer("Tower")));
         
+        //RaycastHit2D[] hit = Physics2D.BoxCastAll(_transform.position, _Attackrange, 0, Vector2.zero);
         if (Time.time > SearchTimeLeft) 
         {
             
             SearchTimeLeft = Time.time + SearchTimeSeconds;
             if (hit != null)
-            {                   
+            {
+                Debug.Log("hithithit!");
+                
                     for (int num = 0; num < hit.Length; num++)
                     {
-                        if (hit[num].collider.gameObject.tag == "Enemy" && num <4)
+                        
+                        if (hit[num].collider.gameObject.tag == "Enemy" )
                         {
 
-                            
-                             
-                            GameObject missile = Instantiate(Missile, MissilePoint.transform.position, MissilePoint.transform.rotation)as GameObject;
+
+                            Debug.Log("check");
+                            //GameObject missile = Instantiate(Missile, MissilePoint.transform.position, MissilePoint.transform.rotation)as GameObject;
+                            //missile.GetComponent<Missile>().SetTarget(hit[num].collider.transform);
+                            //missile.GetComponent<Missile>().SetTower(MissilePoint.transform);                       
+                            GameObject missile = Instantiate(Missile, transform.position, MissilePoint.transform.rotation) as GameObject;
                             missile.GetComponent<Missile>().SetTarget(hit[num].collider.transform);
-                            missile.GetComponent<Missile>().SetTower(MissilePoint.transform);                       
-                            
+                            missile.GetComponent<Missile>().SetTower(MissilePoint.transform);
                                 
                         }
                     }

@@ -6,12 +6,19 @@ public class Pioneer : MonoBehaviour {
     public float Wait;
     public Renderer rend;
     public int hp;
-    
+    public int DeathMoney;
+    public int Buff;
+    private int G_Damage;
+    private int T_Damage;
+    private int W_Damage;
 	// Use this for initialization
 	void Start () {
         rend = GetComponent<Renderer>();
-        hp = 20;
-
+        G_Damage = GetComponent<Missile>().Damage;
+        T_Damage = GetComponent<t_missile>().Damage;
+        W_Damage = GetComponent<w_missile>().Damage;
+        hp = 12;
+        DeathMoney = 20;
 	}
 	
 	// Update is called once per frame
@@ -25,9 +32,19 @@ public class Pioneer : MonoBehaviour {
 	}
     void OnTriggerEnter(Collider coll)
     {
-        if(coll.tag == "missile")
+        if (coll.tag == "g_missile")
         {
-            hp -= 1;
+            hp -= G_Damage;
+        }
+
+        if (coll.tag == "t_missile")
+        {
+            hp -= T_Damage;
+        }
+
+        if (coll.tag == "w_missile")
+        {
+            hp -= W_Damage;
         }
     }
 

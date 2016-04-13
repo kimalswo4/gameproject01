@@ -3,8 +3,8 @@ using System.Collections;
 
 public class VehicleFollowing : MonoBehaviour {
     public Path path;
-    public float speed = 20.0f;
-    public float mass = 5.0f;
+    public float speed = 2.0f;
+    public float mass = 2.0f;
 
     private float monSpeed;
     private int monPathIndex;
