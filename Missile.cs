@@ -2,17 +2,17 @@
 using System.Collections;
 
 public class Missile : MonoBehaviour {
-    private golem tower;
+    
     private Transform Target;
     private Transform TowerPosition;
     
     public float speed;
-    public int Damage;
+    private int Damage;
+    public Sprite[] image;
     //public GameObject golemObject;
 	// Use this for initialization
 	void Start () {
-        tower = GameObject.Find("TowerTest(Clone)").GetComponent<golem>();
-        Damage = 2;
+        
 	}
 	
 	// Update is called once per frame
@@ -23,15 +23,7 @@ public class Missile : MonoBehaviour {
         this.transform.position += speed * dir * Time.deltaTime;
 	}
 
-    void OnTriggerEnter(Collider coll)
-    {
-        if (coll.tag == "Enemy")
-        {
-            
-            Destroy(gameObject);
-            
-        }
-    }
+    
 
     public void SetTarget(Transform get)
     {
@@ -41,5 +33,20 @@ public class Missile : MonoBehaviour {
     public void SetTower(Transform towerget)
     {
         TowerPosition = towerget;
+    }
+
+    public void SetImage(int index)//타워마다 어떠한 미사일 이미지가 나가는지 받는함수
+    {
+        this.gameObject.GetComponent<SpriteRenderer>().sprite = image[index];
+    }
+
+    public void SetDamage(int damage) //타워마다의 대미지가 얼마인지 받는 함수
+    {
+        Damage = damage;
+    }
+
+    public int GetDamage() // 적에게 대미지를 수는함수
+    {
+        return Damage;
     }
 }

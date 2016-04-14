@@ -5,12 +5,14 @@ public class CameraManeger : MonoBehaviour {
     private Vector3 ResetCamera;
     private Vector3 Origin;
     private Vector3 Diference;
-    public bool tower1 = false;
+
+    private bool tower1 = false;
     private bool tower2 = false;
     private bool tower3 = false;
-    public GameObject Tower1;
-    public GameObject Tower2;
-    public GameObject Tower3;
+
+    public GameObject TowerObject1;
+    public GameObject TowerObject2;
+    public GameObject TowerObject3;
     
 
 
@@ -70,25 +72,43 @@ public class CameraManeger : MonoBehaviour {
            {
                if (hit.collider.tag == "Tower1")
                {
+
                    tower1 = true;
-                  
+                   tower2 = false;
+                   tower3 = false;
                }
 
                if(hit.collider.tag == "Tower2")
                {
+                   tower1 = false;
                    tower2 = true;
+                   tower3 = false;
                }
            
                if(hit.collider.tag == "Tower3")
                {
+                   tower1 = false;
+                   tower2 = false;
                    tower3 = true;
                }
-               if(hit.collider.tag == "Ground" && tower1 == true && hit.collider.gameObject.GetComponent<GroundScript>().build == false)
+               if(hit.collider.tag == "Ground" && hit.collider.gameObject.GetComponent<GroundScript>().build == false)
                {
+                   if(tower1 == true)
+                   {
+                       Instantiate(TowerObject1, hit.transform.position, Quaternion.identity);
+                       hit.collider.gameObject.GetComponent<GroundScript>().build = true;
+                       tower1 = false;
+                   }
                    
-                   Instantiate(Tower1, hit.transform.position, Quaternion.identity);
-                   hit.collider.gameObject.GetComponent<GroundScript>().build = true;
-                   tower1 = false;
+                   else if(tower2 == true)
+                   {
+
+                   }
+
+                   else if(tower3 == true)
+                   {
+
+                   }
                }
                
            }
