@@ -70,7 +70,7 @@ public class Tanker : Enemy
     void Buff() // 자기주위에 자신의팀에게 대미지1감소시키는 버프를 넣어준다.
     {
         RaycastHit[] hit = Physics.BoxCastAll(_transform.position, _Attackrange, Vector3.forward, Quaternion.identity, Mathf.Infinity);
-        PrevEnemy = CurrentEnemy;
+        BuffToList(PrevEnemy, 0); //버프끄는거  
         CurrentEnemy.Clear();
         if (hit != null)
         {
@@ -83,15 +83,16 @@ public class Tanker : Enemy
                 }
             }
         }
-        BuffToList(PrevEnemy);
-        BuffToList(CurrentEnemy);
+        //BuffToList(PrevEnemy,1);
+        PrevEnemy = CurrentEnemy; 
+        BuffToList(CurrentEnemy,1); //버프킴
     }
 
-    private void BuffToList(List<Enemy> EnemyList)
+    private void BuffToList(List<Enemy> EnemyList , int Value)
     {
         for (int index = 0; index < EnemyList.Count; ++index)
         {
-            EnemyList[index].SetBuffDeffence(1);
+            EnemyList[index].SetBuffDeffence(Value);
         }
     }
 }

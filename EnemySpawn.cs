@@ -1,25 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 
 public class EnemySpawn : MonoBehaviour {
+    private enum EnemyType { Pioneer, Tanker, Sapper };
 
-    public GameObject Pioneer;
-    public GameObject Tanker;
-    public GameObject Sapper;
 
-    
     public int enemiesLeft;
     public float spawnTime;
     public float spawnTimeLeft;
     public float spawnTimeSeconds = 2f;
 
-    public int i; //웨이브 몬스터숫자
-    public int t_m;//웨이브몬스터 총수
-    public int w; //웨이브단위
-    public int t_w;//총웨이브수
+    private float CreateTime;
 
+    public GameObject[] Enemy;
     
     //public WaveArray[] waveFormation;
    
@@ -27,46 +23,84 @@ public class EnemySpawn : MonoBehaviour {
     {
         //waveFormation = new int[] {};
         //enemiesLeft = waveFormation.Length;
-        
+        OpenMapData(Application.dataPath+"/Data/Stage1.txt");
     }
 
     void Update()
     {
         
         
-        spawnTimeLeft = Time.time - spawnTime;
-        if(spawnTimeLeft >= spawnTimeSeconds)
+        
+    }
+
+    public void OpenMapData(string path)
+    {
+        FileStream fs = new FileStream(path, FileMode.Open);
+        StreamReader sr = new StreamReader(fs);
+        float totalTime = 0.0f;
+        while (sr.Peek() > -1)
         {
-            
-           
-                    /*
-                    if (waveFormation.Length == 0)
+            string[] data = sr.ReadLine().Split('\t'); //Splite \t기준으로 나눠서 배열에저장
+            switch (data[0])
+            {
+                case "TimeSet":
+                    CreateTime = float.Parse(data[1]); //Parse 변환 ex. float.Parse float형으로 형변환
+                    break;
+                case "Create":
+                    totalTime += CreateTime;
+                    if (data[1] == "Pionner")
                     {
-
-                        Instantiate(Pioneer, transform.position, Quaternion.identity);
-                        spawnTime = Time.time;
-                        spawnTimeLeft = 0;
-
+                        Invoke("CreatePioneer", totalTime);
                     }
-                    else if (waveFormation[w][i] == 1)
+                    else if (data[1] == "Tanker")
                     {
-
-                        Instantiate(Tanker, transform.position, Quaternion.identity);
-                        spawnTime = Time.time;
-                        spawnTimeLeft = 0;
-
+                        Invoke("CreateTanker", totalTime);
                     }
-                    else if (waveFormation[w][i] == 2)
+                    else if (data[1] == "Sapper")
                     {
-                        Instantiate(Sapper, transform.position, Quaternion.identity);
-                        spawnTime = Time.time;
-                        spawnTimeLeft = 0;
-
+                        Invoke("CreateSapper", totalTime);
                     }
-                     */
+                    break;
+                case "Stop":
+
+                    break;
                 
-            
+            }
         }
     }
 
+    private void CreateEnemy(EnemyType type)
+    {
+        switch(type)
+        {
+            case EnemyType.Pioneer:
+                Instantiate(Enemy[0], transform.position, Quaternion.identity);
+                break;
+
+            case EnemyType.Sapper:
+                Instantiate(Enemy[1], transform.position, Quaternion.identity);
+                break;
+                
+            case EnemyType.Tanker:
+                Instantiate(Enemy[2], transform.position, Quaternion.identity);
+                break;
+        }
+    }
+    private void CreatePioneer()
+    {
+        Debug.Log("1");
+        CreateEnemy(EnemyType.Pioneer);
+    }
+
+    private void CreateSapper()
+    {
+        Debug.Log("2");
+        CreateEnemy(EnemyType.Sapper);
+    }
+
+    private void CreateTanker()
+    {
+        Debug.Log("3");
+        CreateEnemy(EnemyType.Tanker);
+    }
 }
