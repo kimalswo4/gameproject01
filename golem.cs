@@ -61,16 +61,21 @@ public class golem : MonoBehaviour
 
                 if (S_Debuff == false)
                 {
-                    if (count > 4)
+                    if (count > 3)
                         return;
                     count++;
                     //GameObject missile = Instantiate(Missile, MissilePoint.transform.position, MissilePoint.transform.rotation)as GameObject;
                     //missile.GetComponent<Missile>().SetTarget(hit[num].collider.transform);
                     //missile.GetComponent<Missile>().SetTower(MissilePoint.transform);                       
-                    Missile missile = Instantiate(Missile, transform.position, MissilePoint.transform.rotation) as Missile;
-                    missile.SetTarget(hit[num].collider.transform);
-                    missile.SetTower(MissilePoint.transform);
-                    missile.SetDamage(2);
+                    //Missile missile = Instantiate(Missile, MissilePoint.transform.position, MissilePoint.transform.rotation) as Missile;
+                    GameObject missile = Instantiate(Missile, MissilePoint.transform.position, MissilePoint.transform.rotation) as GameObject;
+                    missile.GetComponent<Missile>().SetTarget(hit[num].collider.transform);
+                    missile.GetComponent<Missile>().SetTower(MissilePoint.transform);
+                    missile.GetComponent<Missile>().SetDamage(2);
+                    //missile.GetComponent<Missile>().SetImage(0);
+                    //missile.SetTarget(hit[num].collider.transform);
+                    //missile.SetTower(MissilePoint.transform);
+                    //missile.SetDamage(2);
                     //missile.SetImage(0);
                 }
             }

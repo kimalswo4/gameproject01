@@ -14,20 +14,18 @@ public class GameManger : MonoBehaviour {
     private float TurnGoldTime;
 
 
-    void Awake()
-    {
-        CurrentMoney = StartMoney;
-    }
-
+   
 	// Use this for initialization
 	void Start () {
         StartMoney = 500;
         TurnMoney = 10;
+        StartCoroutine(TurnAddGold(1));
+        CurrentMoney += StartMoney;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	    
+        
 	}
 
     public void AddGold(int g)
@@ -45,17 +43,21 @@ public class GameManger : MonoBehaviour {
         return CurrentMoney >= g;
     }
 
-    private void TurnAddGold()
+    IEnumerator TurnAddGold(float delay)
     {
-        if (time > TurnGoldTime)
-        {
-            CurrentMoney += TurnMoney;
-        }
-        else
-        {
-            time += Time.deltaTime;
-        }
+        Debug.Log("test");
+        yield return new WaitForSeconds(delay);
+        CurrentMoney += TurnMoney;
+        StartCoroutine(TurnAddGold(1));
     }
 
+    public void TotalHp(int damage)
+    {
+        GameLife -= damage;
+        if(GameLife <= 0)
+        {
+            Time.timeScale = 0.0f;
+        }
+    }
      
 }

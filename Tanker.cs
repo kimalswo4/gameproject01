@@ -14,16 +14,11 @@ public class Tanker : Enemy
     public bool BuffOn;
     private List<Enemy> PrevEnemy;
     private List<Enemy> CurrentEnemy;
-
-    private float time;
-
-
-
+    private GameObject Manger;
 
     // Use this for initialization
     void Start()
     {
-        time = 0;
         _transform = this.transform;
         _Attackrange = new Vector3(Range, Range);
         rend = GetComponent<Renderer>();
@@ -33,6 +28,7 @@ public class Tanker : Enemy
         Invoke("CheckPosition", Wait); //Invoke는 Update함수에 넣으면 안됨 프레임마다 Invoke가실행되기때문에 몇초뒤 프레임마다 실행됨
         PrevEnemy = new List<Enemy>();
         CurrentEnemy = new List<Enemy>();
+        Manger = GameObject.Find("GameManger");
     }
 
     // Update is called once per frame
@@ -60,6 +56,7 @@ public class Tanker : Enemy
             if (hp <= 0)
             {
                 Destroy(gameObject);
+                Manger.GetComponent<GameManger>().AddGold(DeathMoney);
             }
         }
 
@@ -78,7 +75,6 @@ public class Tanker : Enemy
             {
                 if (hit[num].collider.gameObject.tag == "Enemy")
                 {
-                    Debug.Log(hit[num].collider.name);
                     CurrentEnemy.Add(hit[num].collider.GetComponent<Enemy>());
                 }
             }
