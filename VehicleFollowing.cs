@@ -6,6 +6,8 @@ public class VehicleFollowing : MonoBehaviour {
     public float speed = 2.0f;
     public float mass = 2.0f;
 
+    private float totalspeed;
+    private float SlowDebuff;
     private float monSpeed;
     private int monPathIndex;
     private float pathLength;
@@ -16,7 +18,6 @@ public class VehicleFollowing : MonoBehaviour {
 	void Start () {
         pathLength = path.Length;
         monPathIndex = 0;
-        
         velocity = transform.forward;
 	}
 	
@@ -25,8 +26,8 @@ public class VehicleFollowing : MonoBehaviour {
     {
 
         transform.position = new Vector3(transform.position.x, transform.position.y, -1.401298e-45f);
-
-        monSpeed = speed * Time.deltaTime;
+        totalspeed = speed - SlowDebuff;
+        monSpeed = totalspeed * Time.deltaTime;
 
         targetPoint = path.Getpoint(monPathIndex);
          
@@ -80,6 +81,11 @@ public class VehicleFollowing : MonoBehaviour {
         return acceleration;
 
         
+    }
+
+    public void SetSlowBuff(float Value)
+    {
+        SlowDebuff = Value;
     }
     
 }

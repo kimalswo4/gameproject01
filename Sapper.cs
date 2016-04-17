@@ -6,25 +6,28 @@ public class Sapper : Enemy {
     public Renderer rend;
     public int DeathMoney;
    
-    private Transform _transform;
     private Vector3 _Attackrange;
     public float Range = 2.5f; //디버프 범위
     public bool BuffOn;
+    private GameObject Manger;
 	// Use this for initialization
 	void Start () {
-        _transform = this.transform;
         _Attackrange = new Vector3(Range, Range);
         rend = GetComponent<Renderer>();
         hp = 9;
         DeathMoney = 30;
         BuffOn = false;
         Invoke("CheckPosition", Wait);
+        Manger = GameObject.Find("GameManger");
 	}
 	
 	// Update is called once per frame
     void Update()
     {
-        
+        if(BuffOn == false)
+        {
+            Debuff();
+        }
         
     }
 
@@ -36,23 +39,43 @@ public class Sapper : Enemy {
 
         }
     }
+
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.gameObject.CompareTag("Missile"))//연산을 적게먹음
+        {
+            Destroy(coll.gameObject);
+            hp -= coll.gameObject.GetComponent<Missile>().GetDamage();
+            if (hp <= 0)
+            {
+                Destroy(gameObject);
+                Manger.GetComponent<GameManger>().AddGold(DeathMoney);
+            }
+        }
+        if (coll.gameObject.CompareTag("Finish"))
+        {
+            Destroy(gameObject);
+            Manger.GetComponent<GameManger>().TotalHp(1);
+        }
+    }
+
     void Debuff() // 디버프 타워공격 5초간못하게함
     {
-        RaycastHit[] hit = Physics.BoxCastAll(_transform.position, _Attackrange, Vector3.forward, Quaternion.identity, Mathf.Infinity);
-
-        if (hit != null)
+        RaycastHit hit;
+        if (Physics.BoxCast(transform.position, _Attackrange,Vector3.right,out hit))
         {
-            for (int num = 0; num < hit.Length; num++)
-            {
-                if (hit[num].collider.gameObject.tag == "Tower1" || hit[num].collider.gameObject.tag == "Tower2" || hit[num].collider.gameObject.tag == "Tower3")
+                if (hit.collider.gameObject.tag == "Tower")
                 {
-
-
+                    hit.collider.GetComponent<Tower>().StartCoroutine("StopDebuff");
+                    StartCoroutine("CheckDebuff");
                 }
-            }
-
         }
+    }
 
-
+    IEnumerator CheckDebuff()
+    {
+        BuffOn = true;
+        yield return new WaitForSeconds(5.0f);
+        BuffOn = false;
     }
 }

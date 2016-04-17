@@ -9,19 +9,21 @@ public class CameraManeger : MonoBehaviour {
     private bool tower1 = false;
     private bool tower2 = false;
     private bool tower3 = false;
+    public GameObject Manager;
+    public GameObject NotEnoughMoney;
 
     public GameObject TowerObject1;
     public GameObject TowerObject2;
     public GameObject TowerObject3;
-    
 
+    private bool NotMoney;
 
     private bool Drag = false;
 
     void start()
     {
         ResetCamera = Camera.main.transform.position;
-        
+        NotMoney = false;
     }
 
 
@@ -72,10 +74,21 @@ public class CameraManeger : MonoBehaviour {
            {
                if (hit.collider.tag == "Tower1")
                {
-
-                   tower1 = true;
-                   tower2 = false;
-                   tower3 = false;
+                   if (Manager.GetComponent<GameManger>().CheckGold(150) != false)
+                   {
+                       tower1 = true;
+                       tower2 = false;
+                       tower3 = false;
+                   }
+                   else
+                   {
+                       NotEnoughMoney.SetActive(true);
+                       NotMoney = true;
+                       if (NotMoney == true)
+                       {
+                           Invoke("CheckSet", 1);
+                       }
+                   }
                }
 
                if(hit.collider.tag == "Tower2")
@@ -95,6 +108,7 @@ public class CameraManeger : MonoBehaviour {
                {
                    if(tower1 == true)
                    {
+                       Manager.GetComponent<GameManger>().UseGold(150);
                        Instantiate(TowerObject1, hit.transform.position, Quaternion.identity);
                        hit.collider.gameObject.GetComponent<GroundScript>().build = true;
                        tower1 = false;
@@ -102,16 +116,27 @@ public class CameraManeger : MonoBehaviour {
                    
                    else if(tower2 == true)
                    {
-
+                       Manager.GetComponent<GameManger>().UseGold(100);
+                       Instantiate(TowerObject2, hit.transform.position, Quaternion.identity);
+                       hit.collider.gameObject.GetComponent<GroundScript>().build = true;
+                       tower2 = false;
                    }
 
                    else if(tower3 == true)
                    {
-
+                       Manager.GetComponent<GameManger>().UseGold(200);
+                       Instantiate(TowerObject3, hit.transform.position, Quaternion.identity);
+                       hit.collider.gameObject.GetComponent<GroundScript>().build = true;
+                       tower3 = false;
                    }
                }
                
            }
        }
+   }
+
+    void CheckSet()
+   {
+       NotMoney = false;
    }
 }

@@ -59,9 +59,11 @@ public class Tanker : Enemy
                 Manger.GetComponent<GameManger>().AddGold(DeathMoney);
             }
         }
-
-
-
+        if (coll.gameObject.CompareTag("Finish"))
+        {
+            Destroy(gameObject);
+            Manger.GetComponent<GameManger>().TotalHp(1);
+        }
     }
 
     void Buff() // 자기주위에 자신의팀에게 대미지1감소시키는 버프를 넣어준다.

@@ -6,7 +6,7 @@ using System.IO;
 
 public class EnemySpawn : MonoBehaviour {
     private enum EnemyType { Pioneer, Tanker, Sapper };
-    private int waveCount;
+    public int waveCount;
     private float CreateTime;
     public GameObject[] Enemy;    
     //public WaveArray[] waveFormation;
@@ -17,7 +17,6 @@ public class EnemySpawn : MonoBehaviour {
         //enemiesLeft = waveFormation.Length;
         waveCount = 1;
         StartCoroutine(OpenMapData(Application.dataPath+"/Data/Stage1.txt"));
-
     }
 
     void Update()
@@ -45,15 +44,19 @@ public class EnemySpawn : MonoBehaviour {
                     totalTime += CreateTime;
                     if (data[1] == "Pionner")
                     {
-                        Invoke("CreatePioneer", totalTime);
+                        yield return new WaitForSeconds(CreateTime);
+                        CreatePioneer();
                     }
                     else if (data[1] == "Tanker" )
                     {
-                        Invoke("CreateTanker", totalTime);
+                        yield return new WaitForSeconds(CreateTime);
+                        CreateTanker();
+                        //Invoke("CreateTanker", totalTime);
                     }
                     else if (data[1] == "Sapper")
                     {
-                        Invoke("CreateSapper", totalTime);
+                        yield return new WaitForSeconds(CreateTime);
+                        CreateSapper();
                     }
                     break;
                 case "Stop":
@@ -67,14 +70,12 @@ public class EnemySpawn : MonoBehaviour {
         
     }
 
-    
-
     private void CreateEnemy(EnemyType type)
     {
         switch(type)
         {
             case EnemyType.Pioneer:
-                Instantiate(Enemy[0], transform.position, Quaternion.identity);
+                Instantiate(Enemy[0], transform.position, Quaternion.Euler(0,-180.0f,0));
                 break;
 
             case EnemyType.Sapper:
@@ -97,7 +98,7 @@ public class EnemySpawn : MonoBehaviour {
     }
 
     private void CreateTanker()
-    {       
+    {
         CreateEnemy(EnemyType.Tanker);
     }
 }

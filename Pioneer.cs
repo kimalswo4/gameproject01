@@ -7,6 +7,7 @@ public class Pioneer : Enemy {
     public Renderer rend;
     public int DeathMoney;
     public int Buff;
+    private GameObject Manger;
     
     public bool BuffOn;
 
@@ -17,6 +18,7 @@ public class Pioneer : Enemy {
         hp = 12;
         DeathMoney = 20;
         BuffOn = false;
+        Manger = GameObject.Find("GameManger");
 	}
 	
 	// Update is called once per frame
@@ -25,7 +27,25 @@ public class Pioneer : Enemy {
         
        
 	}
-
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.gameObject.CompareTag("Missile"))//연산을 적게먹음
+        {
+            Destroy(coll.gameObject);
+            hp -= coll.gameObject.GetComponent<Missile>().GetDamage();
+            if (hp <= 0)
+            {
+                Destroy(gameObject);
+                Manger.GetComponent<GameManger>().AddGold(DeathMoney);
+            }
+        }
+        
+        if(coll.gameObject.CompareTag("Finish"))
+        {
+            Destroy(gameObject);
+            Manger.GetComponent<GameManger>().TotalHp(1);
+        }
+    }
    
 
     void CheckPosition()
