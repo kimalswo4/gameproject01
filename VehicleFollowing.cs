@@ -14,6 +14,7 @@ public class VehicleFollowing : MonoBehaviour {
     private Vector3 targetPoint;
 
     Vector3 velocity;
+
 	// Use this for initialization
 	void Start () {
         pathLength = path.Length;

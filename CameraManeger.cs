@@ -37,7 +37,7 @@ public class CameraManeger : MonoBehaviour {
         if (Input.GetMouseButton(0))
         {
 
-           
+            
             Diference = (Camera.main.ScreenToWorldPoint(Input.mousePosition)) - Camera.main.transform.position;
             if (Drag == false)
             {
@@ -55,11 +55,7 @@ public class CameraManeger : MonoBehaviour {
         {
             Camera.main.transform.position = Origin - Diference;
         }
-
-        if (Input.GetMouseButton(1))
-        {
-            Camera.main.transform.position = ResetCamera;
-        }
+        MoveLimit();
 
     }
 
@@ -135,8 +131,19 @@ public class CameraManeger : MonoBehaviour {
        }
    }
 
-    void CheckSet()
+   void CheckSet()
    {
        NotMoney = false;
+       NotEnoughMoney.SetActive(false);
+   }
+
+   void MoveLimit()
+   {
+       Vector3 temp;
+       temp.x = Mathf.Clamp(transform.position.x, 0, 10);
+       temp.y = Mathf.Clamp(transform.position.y, 0, 7);
+       temp.z = Mathf.Clamp(transform.position.z, -10, -10);
+
+       transform.position = temp;
    }
 }
