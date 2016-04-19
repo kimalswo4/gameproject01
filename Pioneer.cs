@@ -19,7 +19,6 @@ public class Pioneer : Enemy {
         DeathMoney = 20;
         BuffOn = false;
         Manger = GameObject.Find("GameManger");
-        GameObject.Find("GameSpawn");
 	}
 	
 	// Update is called once per frame
@@ -38,7 +37,6 @@ public class Pioneer : Enemy {
             {
                 Destroy(gameObject);
                 Manger.GetComponent<GameManger>().AddGold(DeathMoney);
-                GameObject.Find("GameSpawn").GetComponent<EnemySpawn>().count--;
             }
         }
         

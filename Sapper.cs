@@ -19,7 +19,6 @@ public class Sapper : Enemy {
         BuffOn = false;
         Invoke("CheckPosition", Wait);
         Manger = GameObject.Find("GameManger");
-        GameObject.Find("GameSpawn");
 	}
 	
 	// Update is called once per frame
@@ -51,7 +50,6 @@ public class Sapper : Enemy {
             {
                 Destroy(gameObject);
                 Manger.GetComponent<GameManger>().AddGold(DeathMoney);
-                GameObject.Find("GameSpawn").GetComponent<EnemySpawn>().count--;
             }
         }
         if (coll.gameObject.CompareTag("Finish"))

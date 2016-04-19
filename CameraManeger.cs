@@ -99,7 +99,7 @@ public class CameraManeger : MonoBehaviour {
        { 
            if (Physics.Raycast(ray, out hit))
            {
-               if(EnemySpawn.GetComponent<EnemySpawn>().End == true && EnemySpawn.GetComponent<EnemySpawn>().count <= 0)
+               if (EnemySpawn.GetComponent<EnemySpawn>().End == true && EnemySpawn.GetComponent<EnemySpawn>().ALLENEMY.Length == 0)
                {
                    if (hit.collider.name == "BackHome")
                    {

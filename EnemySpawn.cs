@@ -11,9 +11,9 @@ public class EnemySpawn : MonoBehaviour {
     public GameObject[] Enemy;
     public GameObject Night;
     public bool End;
-    public int count;
     public GameObject Home;
     public GameObject Clear;
+    public GameObject[] ALLENEMY;
 
     void Start()
     {
@@ -24,13 +24,15 @@ public class EnemySpawn : MonoBehaviour {
         End = false;
         Home.SetActive(false);
         Clear.SetActive(false);
+        
     }
 
     void Update()
     {
+        GameObject[] ALLENEMY = GameObject.FindGameObjectsWithTag("Enemy");
        if(End == true)
        {
-           if(count <= 0)
+           if (ALLENEMY.Length == 0)
            {
                Home.SetActive(true);
                Clear.SetActive(true);
@@ -96,21 +98,19 @@ public class EnemySpawn : MonoBehaviour {
 
     private void CreateEnemy(EnemyType type)
     {
+ 
         switch(type)
         {
             case EnemyType.Pioneer:
                 Instantiate(Enemy[0], transform.position, Quaternion.Euler(0,-180.0f,0));
-                count++;
                 break;
 
             case EnemyType.Sapper:
                 Instantiate(Enemy[1], transform.position, Quaternion.Euler(0, -180.0f, 0));
-                count++;
                 break;
                 
             case EnemyType.Tanker:
                 Instantiate(Enemy[2], transform.position, Quaternion.Euler(0, -180.0f, 0));
-                count++;
                 break;
         }
     }

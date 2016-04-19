@@ -29,7 +29,6 @@ public class Tanker : Enemy
         PrevEnemy = new List<Enemy>();
         CurrentEnemy = new List<Enemy>();
         Manger = GameObject.Find("GameManger");
-        GameObject.Find("GameSpawn");
     }
 
     // Update is called once per frame
@@ -58,7 +57,6 @@ public class Tanker : Enemy
             {
                 Destroy(gameObject);
                 Manger.GetComponent<GameManger>().AddGold(DeathMoney);
-                GameObject.Find("GameSpawn").GetComponent<EnemySpawn>().count--;
             }
         }
         if (coll.gameObject.CompareTag("Finish"))
