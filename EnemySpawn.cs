@@ -8,8 +8,8 @@ public class EnemySpawn : MonoBehaviour {
     private enum EnemyType { Pioneer, Tanker, Sapper };
     public int waveCount;
     private float CreateTime;
-    public GameObject[] Enemy;    
-    //public WaveArray[] waveFormation;
+    public GameObject[] Enemy;
+    public GameObject Night;
    
     void Start()
     {
@@ -61,10 +61,18 @@ public class EnemySpawn : MonoBehaviour {
                     break;
                 case "Stop":
                     wait = float.Parse(data[1]);
+                    Night.GetComponent<CameraManeger>().Night = true;
                     yield return new WaitForSeconds(wait);
+                    Night.GetComponent<CameraManeger>().Night = false;
                     waveCount++;
                     break;
-                
+                case "Start":
+                    wait = float.Parse(data[1]);
+                    Night.GetComponent<CameraManeger>().Night = true;
+                    yield return new WaitForSeconds(wait);
+                    Night.GetComponent<CameraManeger>().Night = false;
+                    break;
+             
             }
         }
         
@@ -79,11 +87,11 @@ public class EnemySpawn : MonoBehaviour {
                 break;
 
             case EnemyType.Sapper:
-                Instantiate(Enemy[1], transform.position, Quaternion.identity);
+                Instantiate(Enemy[1], transform.position, Quaternion.Euler(0, -180.0f, 0));
                 break;
                 
             case EnemyType.Tanker:
-                Instantiate(Enemy[2], transform.position, Quaternion.identity);
+                Instantiate(Enemy[2], transform.position, Quaternion.Euler(0, -180.0f, 0));
                 break;
         }
     }

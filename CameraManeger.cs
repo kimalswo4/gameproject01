@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class CameraManeger : MonoBehaviour {
-    private Vector3 ResetCamera;
     private Vector3 Origin;
     private Vector3 Diference;
 
@@ -16,19 +15,26 @@ public class CameraManeger : MonoBehaviour {
     public GameObject TowerObject2;
     public GameObject TowerObject3;
 
+    public GameObject Light;
+    public GameObject Sun;
+    public GameObject Moon;
+
     private bool NotMoney;
 
+    public bool Night = false; //밤일경우에만 타워가 설치가능해야함
     private bool Drag = false;
 
     void start()
     {
-        ResetCamera = Camera.main.transform.position;
         NotMoney = false;
+        Sun.SetActive(false);
+        Moon.SetActive(false);
     }
 
 
     void Update()
     {
+        CehckNight();
         check();
     }
 
@@ -68,6 +74,8 @@ public class CameraManeger : MonoBehaviour {
        { 
            if (Physics.Raycast(ray, out hit))
            {
+               if (Night == false)
+                    return;
                if (hit.collider.tag == "Tower1")
                {
                    if (Manager.GetComponent<GameManger>().CheckGold(150) != false)
@@ -89,16 +97,40 @@ public class CameraManeger : MonoBehaviour {
 
                if(hit.collider.tag == "Tower2")
                {
-                   tower1 = false;
-                   tower2 = true;
-                   tower3 = false;
+                   if(Manager.GetComponent<GameManger>().CheckGold(100) != false)
+                   {
+                       tower1 = false;
+                       tower2 = true;
+                       tower3 = false;
+                   }
+                   else
+                   {
+                       NotEnoughMoney.SetActive(true);
+                       NotMoney = true;
+                       if(NotMoney == true)
+                       {
+                           Invoke("CheckSet", 1);
+                       }
+                   }
                }
            
                if(hit.collider.tag == "Tower3")
                {
-                   tower1 = false;
-                   tower2 = false;
-                   tower3 = true;
+                   if(Manager.GetComponent<GameManger>().CheckGold(200) != false)
+                   {
+                       tower1 = false;
+                       tower2 = false;
+                       tower3 = true;
+                   }
+                   else
+                   {
+                       NotEnoughMoney.SetActive(true);
+                       NotMoney = true;
+                       if (NotMoney == true)
+                       {
+                           Invoke("CheckSet", 1);
+                       }
+                   }
                }
                if(hit.collider.tag == "Ground" && hit.collider.gameObject.GetComponent<GroundScript>().build == false)
                {
@@ -125,9 +157,25 @@ public class CameraManeger : MonoBehaviour {
                        hit.collider.gameObject.GetComponent<GroundScript>().build = true;
                        tower3 = false;
                    }
-               }
-               
+               }          
            }
+       }
+   }
+    
+   void CehckNight()
+   {
+       if (Night == false)
+       {
+           Moon.SetActive(false);
+           Sun.SetActive(true);
+           Light.GetComponent<Light>().color = Color.white;
+       }
+
+       else
+       {
+           Moon.SetActive(true);
+           Sun.SetActive(false);
+           Light.GetComponent<Light>().color = Color.gray;
        }
    }
 

@@ -12,6 +12,7 @@ public class VehicleFollowing : MonoBehaviour {
     private int monPathIndex;
     private float pathLength;
     private Vector3 targetPoint;
+    private double Test;
 
     Vector3 velocity;
 
@@ -20,13 +21,13 @@ public class VehicleFollowing : MonoBehaviour {
         pathLength = path.Length;
         monPathIndex = 0;
         velocity = transform.forward;
-	}
+    }
 	
 	// Update is called once per frame
     void Update()
     {
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, -1.401298e-45f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, -(float)-1.401298e-45);
         totalspeed = speed - SlowDebuff;
         monSpeed = totalspeed * Time.deltaTime;
 

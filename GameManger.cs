@@ -72,6 +72,6 @@ public class GameManger : MonoBehaviour
     {
         Gold.text = CurrentMoney + "";
         Life.text = "X" + GameLife;
-        Wave.text = EnemySpawn.GetComponent<EnemySpawn>().waveCount + "Wave!";
+        Wave.text = EnemySpawn.GetComponent<EnemySpawn>().waveCount + "Wave";
     }
 }

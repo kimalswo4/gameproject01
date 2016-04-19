@@ -12,6 +12,7 @@ public class golem : Tower
         S_Debuff = false;
         Damage = 2;
         MaxEnemyCount = 3;
+        MissileImage = 0;
     }
 
     // Update is called once per frame
