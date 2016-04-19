@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
+using UnityEngine.UI;
 
 public class EnemySpawn : MonoBehaviour {
     private enum EnemyType { Pioneer, Tanker, Sapper };
@@ -10,18 +10,33 @@ public class EnemySpawn : MonoBehaviour {
     private float CreateTime;
     public GameObject[] Enemy;
     public GameObject Night;
-   
+    public bool End;
+    public int count;
+    public GameObject Home;
+    public GameObject Clear;
+
     void Start()
     {
         //waveFormation = new int[] {};
         //enemiesLeft = waveFormation.Length;
         waveCount = 1;
         StartCoroutine(OpenMapData(Application.dataPath+"/Data/Stage1.txt"));
+        End = false;
+        Home.SetActive(false);
+        Clear.SetActive(false);
     }
 
     void Update()
     {
-        
+       if(End == true)
+       {
+           if(count <= 0)
+           {
+               Home.SetActive(true);
+               Clear.SetActive(true);
+               Time.timeScale = 0.0f;
+           }
+       }
         
         
     }
@@ -72,10 +87,11 @@ public class EnemySpawn : MonoBehaviour {
                     yield return new WaitForSeconds(wait);
                     Night.GetComponent<CameraManeger>().Night = false;
                     break;
+
              
             }
         }
-        
+        End = true;
     }
 
     private void CreateEnemy(EnemyType type)
@@ -84,20 +100,24 @@ public class EnemySpawn : MonoBehaviour {
         {
             case EnemyType.Pioneer:
                 Instantiate(Enemy[0], transform.position, Quaternion.Euler(0,-180.0f,0));
+                count++;
                 break;
 
             case EnemyType.Sapper:
                 Instantiate(Enemy[1], transform.position, Quaternion.Euler(0, -180.0f, 0));
+                count++;
                 break;
                 
             case EnemyType.Tanker:
                 Instantiate(Enemy[2], transform.position, Quaternion.Euler(0, -180.0f, 0));
+                count++;
                 break;
         }
     }
     private void CreatePioneer()
     {
         CreateEnemy(EnemyType.Pioneer);
+        
     }
 
     private void CreateSapper()

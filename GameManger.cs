@@ -15,6 +15,7 @@ public class GameManger : MonoBehaviour
     public Text Wave;
     public GameObject GameOver;
 
+
     [SerializeField]
     private float TurnGoldTime;
 
